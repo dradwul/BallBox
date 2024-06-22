@@ -1,0 +1,13 @@
+﻿<div class="scoreboard">
+	<span class="home-team"> @HomeTeam </span>
+	<span class="home-score"> @HomeScore </span>
+	<span class="away-score"> @AwayScore </span>
+	<span class="away-team"> @AwayTeam </span>
+</div>
+
+@code{
+	[Parameter] public string HomeTeam {get;set;}
+	[Parameter] public int HomeScore {get;set;}
+	[Parameter] public string AwayTeam {get;set;}
+	[Parameter] public int AwayScore {get;set;}
+}

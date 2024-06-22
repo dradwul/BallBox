@@ -1,0 +1,196 @@
+﻿@page "/"
+@using BallBox.Client.Components
+@using BallBox.Models
+
+<PageTitle>Home</PageTitle>
+
+<h1>Game</h1>
+
+<div class="game-box">
+    <div class="game-info">
+        <ScoreboardComponent HomeTeam="@homeTeam" HomeScore="@homeScore" AwayTeam="@awayTeam" AwayScore="@awayScore" />
+        <span class="time">min @currentMinute'</span>
+    </div>
+    <GamePlanComponent ActiveZone="@activeZone" />
+    <GameButtonsComponent ToggleClock="@ToggleClock" RestartClock="@RestartClock" IsRunning="@isRunning" />
+    <GameEventsComponent MatchEvent="@matchEvent" />
+    <TeamInfoComponent HomeTeam="@homeTeam" HomeTeamOverall="@CalculateTeamOverall(sortedHomePlayers)" HomePlayers="@sortedHomePlayers" AwayTeam="@awayTeam" AwayTeamOverall="CalculateTeamOverall(sortedAwayPlayers)" AwayPlayers="@sortedAwayPlayers" />
+</div>
+
+@code {
+    string homeTeam = "Croatia";
+    string awayTeam = "Sweden";
+    int homeScore = 0;
+    int awayScore = 0;
+    int currentMinute = 0;
+    bool isRunning = false;
+    int activeZone = 3;
+    string matchEvent = string.Empty;
+
+    Random random = new();
+    string[] possibleMatchEvents = new string[] { "Skott - miss", "Tackling", "Pass", "Pass", "Pass", "Pass", "HULIGANBRÅK!!" };
+
+    static List<Player> homePlayers = new List<Player> 
+    { 
+        new Player { Name = "Livakovic", Position="Goalkeeper", Number = 1, Overall = 86 },
+        new Player { Name = "Perisic", Position = "Defender", Number = 9, Overall = 88 },
+        new Player { Name = "Brozovic", Position = "Defender", Number = 3, Overall = 81 },
+        new Player { Name = "Modric", Position = "Midfielder", Number = 10, Overall = 94 },
+        new Player { Name = "Rakitic", Position = "Midfielder", Number = 8, Overall = 88 },
+        new Player { Name = "Mandzukic", Position ="Forward", Number = 18, Overall = 89}
+    };
+    List<Player> sortedHomePlayers = homePlayers.OrderBy(p => p.Number).ToList();
+
+    static List<Player> awayPlayers = new List<Player>
+    {
+        new Player { Name = "Olsen", Position="Goalkeeper", Number = 1, Overall = 80 },
+        new Player { Name = "Hien", Position = "Defender", Number = 4, Overall = 82 },
+        new Player { Name = "Mellberg", Position = "Defender", Number = 2, Overall = 83 },
+        new Player { Name = "Forsberg", Position = "Midfielder", Number = 10, Overall = 84 },
+        new Player { Name = "Isak", Position = "Midfielder", Number = 11, Overall = 89 },
+        new Player { Name = "Gyökeres", Position ="Forward", Number = 9, Overall = 90}
+    };
+    List<Player> sortedAwayPlayers = awayPlayers.OrderBy(p => p.Number).ToList();
+
+    private int CalculateTeamOverall(List<Player> players)
+    {
+        int teamOverall = 0;
+
+        foreach(var player in players)
+        {
+            teamOverall += player.Overall;
+        }
+
+        return teamOverall / players.Count;
+    }
+
+    public void HomeGoal()
+    {
+        homeScore++;
+    }
+
+    public void AwayGoal()
+    {
+        awayScore++;
+    }
+
+    public async Task ToggleClock()
+    {
+        if (isRunning)
+        {
+            StopClock();
+        }
+        else
+        {
+            await StartClock();
+        }
+    }
+
+    public async Task StartClock()
+    {
+        if (isRunning) return;
+
+        isRunning = true;
+        while (currentMinute < 90 && isRunning)
+        {
+            currentMinute++;
+            RandomEvent();
+            activeZone = GetNewActiveZone();
+            StateHasChanged();
+            await Task.Delay(300);
+        }
+        matchEvent = CheckFinalScore();
+        isRunning = false;
+    }
+
+    public void StopClock()
+    {
+        isRunning = false;
+    }
+
+    public void RestartClock()
+    {
+        isRunning = false;
+        currentMinute = 0;
+        matchEvent = string.Empty;
+        activeZone = 3;
+        homeScore = 0;
+        awayScore = 0;
+        foreach(var player in homePlayers)
+        {
+            player.GoalsCurrentMatch = 0;
+        }
+        foreach (var player in awayPlayers)
+        {
+            player.GoalsCurrentMatch = 0;
+        }
+    }
+
+    private void RandomEvent()
+    {
+        matchEvent = possibleMatchEvents[random.Next(0, possibleMatchEvents.Length)];
+    }
+
+    private int GetNewActiveZone()
+    {
+        if (currentMinute == 46)
+        {
+            return 3;
+        }
+
+        if (activeZone == 1)
+        {
+            int checkGoal = random.Next(1, 4);
+            if (checkGoal == 3)
+            {
+                var goalScorer = sortedAwayPlayers[random.Next(2, sortedAwayPlayers.Count)];
+                goalScorer.GoalsCurrentMatch++;
+                matchEvent = $"MÅL! {goalScorer.Name}";
+                AwayGoal();
+                return 3;
+            }
+            return 2;
+        }
+
+        if (activeZone == 5)
+        {
+            int checkGoal = random.Next(1, 4);
+            if (checkGoal == 3)
+            {
+                var goalScorer = sortedHomePlayers[random.Next(2, sortedHomePlayers.Count)];
+                goalScorer.GoalsCurrentMatch++;
+                matchEvent = $"MÅL! {goalScorer.Name}";
+                HomeGoal();
+                return 3;
+            }
+            return 4;
+        }
+
+        if (activeZone > 1 && activeZone < 5)
+        {
+            int newZone = random.Next(activeZone - 1, activeZone + 2);
+            return Math.Clamp(newZone, 1, 5);
+        }
+
+        return 3;
+    }
+    private string CheckFinalScore()
+    {
+        if(currentMinute >= 90)
+        {
+            if (homeScore > awayScore)
+            {
+                return $"{homeTeam} wins!";
+            }
+            if (awayScore > homeScore)
+            {
+                return $"{awayTeam} wins!";
+            }
+            else
+            {
+                return "Draw";
+            }
+        }
+        return "Game paused..";
+    }
+}

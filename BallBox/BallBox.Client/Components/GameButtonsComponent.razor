@@ -1,0 +1,15 @@
+﻿<div class="game-buttons">
+    <button @onclick="ToggleClock"> @GetButtonText() </button>
+    <button @onclick="RestartClock"> Restart Clock </button>
+</div>
+
+@code {
+    [Parameter] public EventCallback ToggleClock { get; set; }
+    [Parameter] public EventCallback RestartClock { get; set; }
+    [Parameter] public bool IsRunning { get; set; }
+
+    private string GetButtonText()
+    {
+        return IsRunning ? "Stop Game" : "Start Game";
+    }
+}

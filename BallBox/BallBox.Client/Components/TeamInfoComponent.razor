@@ -1,0 +1,26 @@
+﻿@using BallBox.Models
+<div class="game-team-info">
+    <div class="game-home-team-details">
+        <span class="game-details-team-name"> @HomeTeam (@HomeTeamOverall) </span>
+        @foreach (var player in HomePlayers)
+        {
+            <HomePlayerInfoComponent Player="player" />
+        }
+    </div>
+    <div class="game-away-team-details">
+        <span class="game-details-team-name"> (@AwayTeamOverall) @AwayTeam </span>
+        @foreach (var player in AwayPlayers)
+        {
+            <AwayPlayerInfoComponent Player="player" />
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public string HomeTeam { get; set; }
+    [Parameter] public int HomeTeamOverall { get; set; }
+    [Parameter] public List<Player> HomePlayers { get; set; }
+    [Parameter] public string AwayTeam { get; set; }
+    [Parameter] public int AwayTeamOverall { get; set; }
+    [Parameter] public List<Player> AwayPlayers { get; set; }
+}

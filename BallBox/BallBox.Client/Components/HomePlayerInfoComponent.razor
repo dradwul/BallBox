@@ -1,0 +1,15 @@
+﻿@using BallBox.Models
+<div class="player-info">
+    <span class="player-number"> @Player.Number </span>
+    <span class="player-name"> @Player.Name </span>
+    <div class="player-goals">
+        @for (int i = 0; i < Player.GoalsCurrentMatch; i++)
+        {
+            <img src="\media\game-goal-ball.png" alt="Goal Ball" class="goal-icon" />
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public Player Player { get; set; }
+}
