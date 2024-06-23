@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBox", "BallBox\BallBox\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBox.Client", "BallBox\BallBox.Client\BallBox.Client.csproj", "{28CBC018-2BA6-421D-8ECE-2A72BA0C61FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallBox.Data", "BallBox.Data\BallBox.Data.csproj", "{5AFF621D-95AA-4052-BDCB-CE37918FEBB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{28CBC018-2BA6-421D-8ECE-2A72BA0C61FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28CBC018-2BA6-421D-8ECE-2A72BA0C61FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28CBC018-2BA6-421D-8ECE-2A72BA0C61FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AFF621D-95AA-4052-BDCB-CE37918FEBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AFF621D-95AA-4052-BDCB-CE37918FEBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AFF621D-95AA-4052-BDCB-CE37918FEBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AFF621D-95AA-4052-BDCB-CE37918FEBB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

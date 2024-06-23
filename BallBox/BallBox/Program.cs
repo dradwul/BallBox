@@ -1,5 +1,9 @@
 using BallBox.Client.Pages;
 using BallBox.Components;
+using BallBox.Data;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace BallBox
 {
@@ -12,6 +16,9 @@ namespace BallBox
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveWebAssemblyComponents();
+
+            builder.Services.AddDbContext<BallBoxDbContext>(options =>
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

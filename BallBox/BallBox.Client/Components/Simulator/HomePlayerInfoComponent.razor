@@ -1,13 +1,13 @@
-﻿@using BallBox.Models
+﻿@using BallBox.Client.Models
 <div class="player-info">
+    <span class="player-number"> @Player.Number </span>
+    <span class="player-name"> @Player.Name </span>
     <div class="player-goals">
-        @for (int i = 0; i < Player.GoalsCurrentMatch; i++)
+        @for (int i = 0; i < Player.CurrentMatchStats.Goals; i++)
         {
             <img src="\media\game-goal-ball.png" alt="Goal Ball" class="goal-icon" />
         }
     </div>
-    <span class="player-name"> @Player.Name </span>
-    <span class="player-number"> @Player.Number </span>
 </div>
 
 @code {

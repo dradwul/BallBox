@@ -2,7 +2,7 @@
 
 namespace BallBox.Client.Models
 {
-    public class Tournament
+    public class League
     {
         [Key]
         public int Id { get; set; }

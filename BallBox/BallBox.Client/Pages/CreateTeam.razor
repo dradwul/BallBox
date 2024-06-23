@@ -1,0 +1,28 @@
+﻿@page "/createteam"
+@using BallBox.Client.Models
+
+<PageTitle>Create Team</PageTitle>
+
+<h1>Create Team</h1>
+
+<form method="post" @onsubmit="HandleSubmit">
+	<div class="form-group">
+		<label for="teamname"> Team Name </label>
+		<input for="teamname" class="form-control" @bind="NewTeam.Name"/>
+	</div>
+	<div class="form-group">
+	</div>
+
+	<button type="submit" class="btn btn-primary"> Create </button>
+</form>
+
+
+@code {
+	[Parameter]
+	public Team NewTeam { get; set; } = new();
+
+	private void HandleSubmit()
+	{
+		
+	}
+}

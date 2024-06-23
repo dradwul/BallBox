@@ -1,10 +1,18 @@
-﻿namespace BallBox.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BallBox.Client.Models
 {
     public class Player
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+
+        [ForeignKey("Team")]
+        public int TeamId { get; set; }
         public Team Team { get; set; }
+
         public int Number { get; set; }
         public string Position { get; set; }
         public int Age { get; set; }
@@ -15,12 +23,11 @@
         public int Dribbling { get; set; }
         public int Passing { get; set; }
         public int Shooting { get; set; }
-        public int Goalkeeping { get; set; } = 0;
+        public int Goalkeeping { get; set; }
         public int Physical { get; set; }
-        public double ChanceToScoreModifyer { get; set; }   // TODO: Remove this and
-                                                            // replace with other stats
         public int Goals { get; set; }
         public int Assists { get; set; }
-        public int GoalsCurrentMatch { get; set; }
+
+        public MatchStats CurrentMatchStats { get; set; } = new();
     }
 }
