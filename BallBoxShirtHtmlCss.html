@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Card</title>
+    <style>
+        .player-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+            width: 100px;
+            height: 125px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            font-family: Bahnschrift, Arial, Helvetica, sans-serif;
+        }
+        .player-shirt-top {
+            background-color: #f7f313;
+            height: 30%;
+            width: 80%;
+            position: relative;
+            z-index: 5;
+            border: 1px solid #666;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 35px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .player-shirt-bottom {
+            background-color: #f7f313;
+            height: 40%;
+            width: 50%;
+            z-index: 6;
+            border-right: 1px solid #666;
+            border-bottom: 1px solid #666;
+            border-left: 1px solid #666;
+            margin-top: -10px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .player-name {
+            position: absolute;
+            top: 30%;
+            font-size: 1.7vw;
+            font-weight: bold;
+        }
+        .player-number {
+            position: absolute;
+            bottom: 15%;
+            font-size: 5vw;
+            font-weight: bold;
+        }
+        .player-position {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 0px;
+            font-size: 2vw;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-card">
+        <div class="player-shirt-top">
+            <span class="player-name">Olsen</span>
+        </div>
+        <div class="player-shirt-bottom">
+            <span class="player-number">1</span>
+        </div>
+        <div class="player-position">
+            <span class="player-position">Goalkeeper</span>
+        </div>
+    </div>
+    <div class="player-card">
+        <div class="player-shirt-top">
+            <span class="player-name">Ibrahimovic</span>
+        </div>
+        <div class="player-shirt-bottom">
+            <span class="player-number">10</span>
+        </div>
+        <div class="player-position">
+            <span class="player-position">Forward</span>
+        </div>
+    </div>
+    <div class="player-card">
+        <div class="player-position">
+            <span class="player-position">Forward</span>
+        </div>
+        <div class="player-shirt-top">
+            <span class="player-name">Isak</span>
+        </div>
+        <div class="player-shirt-bottom">
+            <span class="player-number">14</span>
+        </div>
+    </div>
+</body>
+</html>
