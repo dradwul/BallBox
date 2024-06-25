@@ -1,0 +1,31 @@
+﻿@page "/createplayer"
+@using BallBox.Client.Models
+
+<PageTitle>Create Player</PageTitle>
+
+<h1>Create Player</h1>
+
+<form method="post" @onsubmit="HandleSubmit">
+	<div class="form-group">
+		<label for="playername"> Name </label>
+		<input for="playername" class="form-control" @bind="NewPlayer.Name" />
+	</div>
+
+	<div class="form-group">
+		<label for="playerage"> Age </label>
+		<input form="playerage" class="form-control" @bind="NewPlayer.Age" />
+	</div>
+
+	<button type="submit" class="btn btn-primary"> Create </button>
+</form>
+
+
+@code {
+	[Parameter]
+	public Player NewPlayer { get; set; } = new();
+
+	private void HandleSubmit()
+	{
+
+	}
+}

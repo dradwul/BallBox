@@ -7,6 +7,7 @@ namespace BallBox.Client.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Color { get; set; }
         public int Overall { get; set; }
         public int Attacking { get; set; }
         public int Defending { get; set; }

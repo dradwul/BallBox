@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using BallBox.Client.Components.Player
 @using BallBox.Client.Components.Simulator
 @using BallBox.Client.Models
 
@@ -14,7 +15,28 @@
     <GamePlanComponent ActiveZone="@activeZone" />
     <GameButtonsComponent ToggleClock="@ToggleClock" RestartClock="@RestartClock" IsRunning="@isRunning" />
     <GameEventsComponent MatchEvent="@matchEvent" />
-    <TeamInfoComponent HomeTeam="@homeTeam.Name" HomeTeamOverall="@homeTeam.CalculateTeamOverall()" HomePlayers="@sortedHomePlayers" AwayTeam="@awayTeam.Name" AwayTeamOverall="@awayTeam.CalculateTeamOverall()" AwayPlayers="@sortedAwayPlayers" />
+    @*<TeamInfoComponent HomeTeam="@homeTeam.Name" HomeTeamOverall="@homeTeam.CalculateTeamOverall()" HomePlayers="@sortedHomePlayers" AwayTeam="@awayTeam.Name" AwayTeamOverall="@awayTeam.CalculateTeamOverall()" AwayPlayers="@sortedAwayPlayers" />*@
+</div>
+
+<div class="player-card-group">
+    <div class="player-card-group-details">
+        <span class="player-card-group-team-name">@homeTeam.Name</span>
+        <span class="player-card-group-team-overall">@homeTeam.CalculateTeamOverall()</span>
+    </div>
+    @foreach (var player in sortedHomePlayers)
+    {
+        <PlayerCardComponent Player="@player" ShirtColor="@homeTeam.Color" />
+    }
+</div>
+<div class="player-card-group">
+    <div class="player-card-group-details">
+        <span class="player-card-group-team-name">@awayTeam.Name</span>
+        <span class="player-card-group-team-overall">@awayTeam.CalculateTeamOverall()</span>
+    </div>
+    @foreach (var player in sortedAwayPlayers)
+    {
+        <PlayerCardComponent Player="@player" ShirtColor="@awayTeam.Color" />
+    }
 </div>
 
 @code {
@@ -30,7 +52,8 @@
             new Player { Name = "Rakitic", Position = "Midfielder", Number = 8, Overall = 88 },
             new Player { Name = "Mandzukic", Position ="Forward", Number = 18, Overall = 89},
             new Player { Name = "Suker", Position="Forward", Number = 7, Overall = 93 }
-        }
+        },
+        Color = "#fff"
     };
 
     Team awayTeam = new Team 
@@ -40,12 +63,13 @@
         {
             new Player { Name = "Olsen", Position="Goalkeeper", Number = 1, Overall = 80 },
             new Player { Name = "Hien", Position = "Defender", Number = 4, Overall = 82 },
-            new Player { Name = "Nilsson Lindelöf", Position = "Defender", Number = 2, Overall = 83 },
+            new Player { Name = "Lindelöf", Position = "Defender", Number = 2, Overall = 83 },
             new Player { Name = "Forsberg", Position = "Midfielder", Number = 10, Overall = 84 },
             new Player { Name = "Isak", Position = "Midfielder", Number = 11, Overall = 89 },
             new Player { Name = "Gyökeres", Position ="Forward", Number = 9, Overall = 90},
             new Player { Name = "Karlsson", Position ="Forward", Number = 7, Overall = 78}
-        }
+        },
+        Color = "#f7f313"
     };
 
     int homeScore = 0;
@@ -53,7 +77,7 @@
     int currentMinute = 0;
     bool isRunning = false;
     int activeZone = 3;
-    string matchEvent = string.Empty;
+    string matchEvent = "Match about to start..";
 
     Random random = new();
     string[] possibleMatchEvents = new string[] { "Skott - miss", "Tackling", "Pass", "Pass", "Pass", "Pass", "HULIGANBRÅK!!" };

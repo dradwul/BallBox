@@ -3,6 +3,7 @@
     /*font-family: Leelawadee*/
 }
 
+
 .game-box {
     background-color: transparent;
     display: flex;
@@ -169,19 +170,24 @@
 
 .player-number, .player-goals {
     color: #ff0951;
-    width: 25px;
+    max-width: 70px;
 }
 
 .player-goals {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
+    position:absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 50;
 }
 
 .goal-icon {
     width: 12px;
     height: 12px;
-    margin-left: 5px;
+    margin: 2px;
 }
 
 .player-name {
@@ -210,3 +216,128 @@
         flex-direction: row-reverse;
         margin-right: 5px;
     }
+
+
+.player-card-group {
+    background-color: #eee;
+    display: flex;
+    max-width: 800px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    border-radius: 8px;
+}
+.player-card-group-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.player-card-group-team-name {
+    font-size: 2rem;
+    color: #666;
+    font-weight:600;
+}
+.player-card-group-team-overall {
+    font-size: 4rem;
+    height: 70px;
+    margin-top: -20px;
+    color: #ccc;
+}
+.player-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-width: 100px;
+    height: 110px;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    font-family: Bahnschrift, Arial, Helvetica, sans-serif;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 8px;
+    padding: 8px;
+}
+
+.player-card-shirt-top {
+    background-color: #fff;
+    height: 50%;
+    width: 90%;
+    position: relative;
+    z-index: 5;
+    border: 1px solid #666;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-card-shirt-bottom {
+    background-color: #fff;
+    height: 50%;
+    width: 60%;
+    z-index: 6;
+    border-right: 1px solid #666;
+    border-bottom: 1px solid #666;
+    border-left: 1px solid #666;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.player-card-name {
+    position: absolute;
+    top: 15%;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.player-card-number {
+    position: absolute;
+    bottom: 5%;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.player-card-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.player-card-details-overall {
+    font-size: 1.1rem;
+    height: 100%;
+    margin-top: -2px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    line-height: 1;
+}
+
+    .player-card-details-overall::after {
+        content: "OVR";
+        font-size: 0.5rem;
+        margin-top: -2px;
+    }
+
+.player-card-details-position {
+    font-size: 0.6rem;
+    color: #aaa;
+    height: 100%;
+}
