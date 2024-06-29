@@ -2,7 +2,7 @@
 <div class="player-card">
     <div class="player-card-details">
         <span class="player-card-details-overall"> @Player.Overall </span>
-        @*<span class="player-card-details-position"> @Player.Position </span>*@
+        <span class="player-card-details-position"> @PlayerPositionShortened(Player.Position.ToString()) </span>
     </div>
     <div class="player-card-shirt-top" style="background-color:@ShirtColor">
         <span class="player-card-name"> @Player.Name </span>
@@ -21,4 +21,25 @@
 @code {
     [Parameter] public Player Player { get; set; }
     [Parameter] public string ShirtColor { get; set; }
+
+    public string PlayerPositionShortened(string fullPosition)
+    {
+        if(fullPosition == "Goalkeeper")
+        {
+            return "GK";
+        }
+        else if(fullPosition == "Defender")
+        {
+            return "DEF";
+        }
+        else if(fullPosition == "Midfielder")
+        {
+            return "MF";
+        }
+        else if(fullPosition == "Forward")
+        {
+            return "FW";
+        }
+        return string.Empty;
+    }
 }

@@ -9,6 +9,8 @@ namespace BallBox.Client.Models
         public int Goals { get; set; }
         public int Assists { get; set; }
         public int YellowCards { get; set; }
-        public int RedCard {  get; set; }
+        public int RedCards {  get; set; }
+        public int Freekicks { get; set; }
+        public int Corners { get; set; }
     }
 }

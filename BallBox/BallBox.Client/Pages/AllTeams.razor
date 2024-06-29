@@ -1,0 +1,29 @@
+﻿@page "/allteams"
+@using BallBox.Client.Models
+@using BallBox.Client.Services
+@inject TeamService TeamService
+
+<h3>Teams</h3>
+
+@if (teams == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var team in teams)
+        {
+            <li>@team.Name</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Team> teams;
+
+    protected override async Task OnInitializedAsync()
+    {
+        teams = await TeamService.GetTeamsAsync();
+    }
+}

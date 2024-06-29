@@ -1,32 +1,42 @@
 ﻿@page "/createteam"
 @using BallBox.Client.Models
+@using BallBox.Client.Services
+@inject TeamService TeamService
+@inject NavigationManager NavigationManager
 
-<PageTitle>Create Team</PageTitle>
+<h3>Create Team</h3>
 
-<h1>Create Team</h1>
+<SuccessMessage @ref="successMessage" />
 
-<form method="post" @onsubmit="HandleSubmit">
-	<div class="form-group">
-		<label for="teamname"> Team Name </label>
-		<input for="teamname" class="form-control" @bind="NewTeam.Name"/>
-	</div>
-	<div class="form-group">
-		<label for="teamname"> Team Color </label>
-		<input for="teamname" class="form-control" @bind="NewTeam.Color" />
-	</div>
-	<div class="form-group">
-	</div>
 
-	<button type="submit" class="btn btn-primary"> Create </button>
-</form>
+<EditForm Model="newTeam" OnValidSubmit="HandleSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<InputText placeholder="Name" id="name" @bind-Value="newTeam.Name" />
+	<InputText placeholder="Prim. Color" id="primaryColor" @bind-Value="newTeam.PrimaryColor" />
+	<InputText placeholder="Sec. Color" id="secondaryColor" @bind-Value="newTeam.SecondaryColor" />
+	<button type="submit">Create Team</button>
+</EditForm>
 
 
 @code {
-	[Parameter]
-	public Team NewTeam { get; set; } = new();
+	private Team newTeam = new Team();
+	private SuccessMessage successMessage;
 
-	private void HandleSubmit()
-	{
-		
-	}
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            await TeamService.CreateTeamAsync(newTeam);
+            successMessage.Message = "Team created successfully!";
+            successMessage.ShowMessage = true;
+            await Task.Delay(2000); // Optional delay before redirecting
+            NavigationManager.NavigateTo("/allteams"); // Replace "/teams" with your actual team list page
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions here if necessary
+            Console.WriteLine($"Error creating team: {ex.Message}");
+        }
+    }
 }

@@ -175,13 +175,14 @@
 
 .player-goals {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
     position:absolute;
-    top: 5px;
-    right: 5px;
+    top: 25px;
+    right: -5px;
     z-index: 50;
+    max-height: 80px;
 }
 
 .goal-icon {
@@ -337,7 +338,9 @@
     }
 
 .player-card-details-position {
-    font-size: 0.6rem;
+    font-size: 1rem;
     color: #aaa;
     height: 100%;
+    margin-top: -5px;
+    color: #ddd;
 }

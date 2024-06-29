@@ -1,4 +1,5 @@
 ﻿using BallBox.Client.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BallBox.Data.Repositories
 {
@@ -14,6 +15,11 @@ namespace BallBox.Data.Repositories
 		{
 			await _context.Teams.AddAsync(team);
 			await _context.SaveChangesAsync();
+		}
+
+		public async Task<int> GetTeamCountAsync()
+		{
+			return await _context.Teams.CountAsync();
 		}
 	}
 }

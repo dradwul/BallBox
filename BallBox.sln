@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Presentation", "4.Present
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBox.Application", "BallBox.Application\BallBox.Application.csproj", "{1E9F1685-6FDA-4FCB-9B7A-C6BB2ED470FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallBox.API", "BallBox.API\BallBox.API.csproj", "{3C9D5C21-F222-4745-8312-32EF62454AF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{1E9F1685-6FDA-4FCB-9B7A-C6BB2ED470FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E9F1685-6FDA-4FCB-9B7A-C6BB2ED470FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E9F1685-6FDA-4FCB-9B7A-C6BB2ED470FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C9D5C21-F222-4745-8312-32EF62454AF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9D5C21-F222-4745-8312-32EF62454AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9D5C21-F222-4745-8312-32EF62454AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9D5C21-F222-4745-8312-32EF62454AF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{28CBC018-2BA6-421D-8ECE-2A72BA0C61FD} = {27566153-C88D-489D-9D8A-C65750B8B3A8}
 		{5AFF621D-95AA-4052-BDCB-CE37918FEBB4} = {5EF20938-4F53-49FA-AAB7-48AD0AB09260}
 		{1E9F1685-6FDA-4FCB-9B7A-C6BB2ED470FD} = {9FF097DB-81F4-4233-944E-06346234B933}
+		{3C9D5C21-F222-4745-8312-32EF62454AF9} = {A423BAB5-9B29-4E3B-85E4-C316B3BA0694}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7DCB1955-DBB4-43BB-9D79-60FD043B5E22}

@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BallBox\BallBox.Client\BallBox.Client.csproj" />
-  </ItemGroup>
-
 </Project>
