@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace BallBox.Client.Services
 {
-	public class TeamService
+    public class TeamService
 	{
 		private readonly HttpClient _httpClient;
 		public TeamService(HttpClient httpClient)
@@ -14,14 +14,13 @@ namespace BallBox.Client.Services
 		public async Task CreateTeamAsync(Team team)
 		{
 			int currentTeamCount = await GetCurrentTeamCountAsync();
-
 			team.Id = currentTeamCount + 1;
 
 			var response = await _httpClient.PostAsJsonAsync("https://localhost:7250/api/team", team);
 			response.EnsureSuccessStatusCode();
 		}
 
-		private async Task<int> GetCurrentTeamCountAsync()
+		public async Task<int> GetCurrentTeamCountAsync()
 		{
             var response = await _httpClient.GetAsync("https://localhost:7250/api/team/count");
 			response.EnsureSuccessStatusCode();
@@ -32,8 +31,7 @@ namespace BallBox.Client.Services
 
         public async Task<List<Team>> GetTeamsAsync()
         {
-            var response = await _httpClient.GetFromJsonAsync<List<Team>>("https://localhost:7250/api/team");
-            return response;
+			return await _httpClient.GetFromJsonAsync<List<Team>>("https://localhost:7250/api/team");
         }
     }
 }

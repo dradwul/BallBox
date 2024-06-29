@@ -17,6 +17,22 @@ else
             <li>@team.Name</li>
         }
     </ul>
+    <table class="table">
+        <thead>
+            <th>Team</th>
+            <th>Color</th>
+            <th>OVR</th>
+        </thead>
+        <tbody>
+            @foreach(var team in teams){
+                <tr>
+                    <td>@team.Name</td>
+                    <td>@team.PrimaryColor / @team.SecondaryColor</td>
+                    <td>@team.Overall</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 @code {
@@ -24,6 +40,13 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        teams = await TeamService.GetTeamsAsync();
+        try
+        {
+            teams = await TeamService.GetTeamsAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error fetching teams: " + ex.Message);
+        }
     }
 }

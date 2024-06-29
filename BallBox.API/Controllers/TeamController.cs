@@ -25,13 +25,14 @@ namespace BallBox.API.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Get()
+		public async Task<ActionResult<List<Team>>> GetTeamsAsync()
 		{
-			return Ok("API is working");
+			var teams = await _teamRepository.GetTeamsAsync();
+			return Ok(teams);
 		}
 
 		[HttpGet("count")]
-		public async Task<IActionResult> GetTeamCountAsync()
+		public async Task<ActionResult<int>> GetTeamCountAsync()
 		{
 			var count = await _teamRepository.GetTeamCountAsync();
 			return Ok(count);

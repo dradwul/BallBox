@@ -17,6 +17,11 @@ namespace BallBox.Data.Repositories
 			await _context.SaveChangesAsync();
 		}
 
+		public Task<List<Team>> GetTeamsAsync()
+		{
+			return _context.Teams.ToListAsync();
+		}
+
 		public async Task<int> GetTeamCountAsync()
 		{
 			return await _context.Teams.CountAsync();

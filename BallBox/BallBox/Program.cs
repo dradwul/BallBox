@@ -4,6 +4,7 @@ using BallBox.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Microsoft.EntityFrameworkCore.Design;
+using BallBox.Client.Services;
 
 namespace BallBox
 {

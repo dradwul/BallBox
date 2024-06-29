@@ -6,8 +6,6 @@
 
 <h3>Create Team</h3>
 
-<SuccessMessage @ref="successMessage" />
-
 
 <EditForm Model="newTeam" OnValidSubmit="HandleSubmit">
 	<DataAnnotationsValidator />
@@ -21,22 +19,10 @@
 
 @code {
 	private Team newTeam = new Team();
-	private SuccessMessage successMessage;
 
-    private async Task HandleSubmit()
-    {
-        try
-        {
-            await TeamService.CreateTeamAsync(newTeam);
-            successMessage.Message = "Team created successfully!";
-            successMessage.ShowMessage = true;
-            await Task.Delay(2000); // Optional delay before redirecting
-            NavigationManager.NavigateTo("/allteams"); // Replace "/teams" with your actual team list page
-        }
-        catch (Exception ex)
-        {
-            // Handle exceptions here if necessary
-            Console.WriteLine($"Error creating team: {ex.Message}");
-        }
-    }
+	private async Task HandleSubmit()
+	{
+		await TeamService.CreateTeamAsync(newTeam);
+		NavigationManager.NavigateTo("/allteams");
+	}
 }
