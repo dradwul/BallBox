@@ -17,14 +17,33 @@ namespace BallBox.API.Controllers
 			_teamRepository = teamRepository;
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> CreateTeamAsync([FromBody] Team team)
-		{
-			await _teamRepository.AddTeamAsync(team);
-			return Ok();
-		}
+        [HttpPost]
+        public async Task<IActionResult> CreateTeamAsync([FromBody] Team team)
+        {
+            if (team == null)
+            {
+                return BadRequest("Team cannot be null");
+            }
 
-		[HttpGet]
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _teamRepository.AddTeamAsync(team);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (consider using a logging framework)
+                Console.WriteLine($"Error creating team: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet]
 		public async Task<ActionResult<List<Team>>> GetTeamsAsync()
 		{
 			var teams = await _teamRepository.GetTeamsAsync();

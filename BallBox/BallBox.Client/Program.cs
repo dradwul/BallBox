@@ -1,5 +1,6 @@
 using BallBox.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using System.Text.Json;
 
 namespace BallBox.Client
 {
@@ -12,8 +13,9 @@ namespace BallBox.Client
 			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             
             builder.Services.AddScoped<TeamService>();
+            builder.Services.AddScoped<PlayerService>();
 
-			await builder.Build().RunAsync();
+            await builder.Build().RunAsync();
         }
     }
 }

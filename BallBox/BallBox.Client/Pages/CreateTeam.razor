@@ -2,83 +2,103 @@
 @using BallBox.Client.Models
 @using BallBox.Client.Services
 @inject TeamService TeamService
+@inject PlayerService PlayerService
 @inject NavigationManager NavigationManager
 
 <h3>Create Team</h3>
 
-
 <EditForm Model="newTeam" OnValidSubmit="HandleSubmit">
-	<DataAnnotationsValidator />
-	<ValidationSummary />
-	<div class="form-control">
-		<label>Team Name</label>
-		<InputText class="form" @bind-Value="newTeam.Name" />
-		<br>
-		<label>Primary Color</label>
-		<InputText @bind-Value="newTeam.PrimaryColor" />
-		<br>
-		<label>Secondary Color</label>
-		<InputText @bind-Value="newTeam.SecondaryColor" />
-	</div>
-	@* <div class="form-control">
-		<h5> Players </h5>
-		<label>Player</label>
-		<InputNumber @bind-Value="newTeam.Attacking" />
-		<label>Defending</label>
-		<InputNumber @bind-Value="newTeam.Defending" />
-	</div> *@
-	
-	<button type="submit">Create Team</button>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-control">
+        <label>Team Name</label>
+        <InputText class="form" @bind-Value="newTeam.Name" />
+        <br>
+        <label>Primary Color</label>
+        <InputText @bind-Value="newTeam.PrimaryColor" />
+        <br>
+        <label>Secondary Color</label>
+        <InputText @bind-Value="newTeam.SecondaryColor" />
+    </div>
+    <button type="submit">Create Team</button>
 </EditForm>
 
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
 
 @code {
-	private Team newTeam = new Team();
+    private Team newTeam = new();
+    private List<Player> players = new();
 
-	private async Task HandleSubmit()
-	{
-		var players = GeneratePlayersToTeam();
-		newTeam.Players = players;
-		await TeamService.CreateTeamAsync(newTeam);
-		NavigationManager.NavigateTo("/allteams");
-	}
+    private string? errorMessage;
 
-	private Player GenerateNewRandomPlayer()
-	{
-		Random random = new();
-		string[] fNames = new string[] {"Zlatko", "Bob", "John", "Abdo", "Alexander", "Alf",
-										"Brian", "Marcus", "Ilve", "Anthony", "Marc","Leo","Anders",
-										"King","Nico", "Bruno", "Tomas","Toni"};
-		string[] lNames = new string[] {"Anderson", "Modric", "Johansson", "El Bruto", "Kostic", "Hansen",
-										"Oduya", "McCann", "Alonso", "Sanchez", "Martinez", "Gudmundsen",
-										"Cruyff", "Bronkz", "Badonk", "Dängsen", "Brúm", "Diaz", "El Dängo",
-										"Minko", "Putinski", "Kroos", "Hernandez"};
+    /*protected override async Task OnInitializedAsync()
+        {
+        await GenerateRandomPlayersAsync();
+    }*/
 
-		return new Player()
-			{
-				Name = lNames[random.Next(0, lNames.Length)],
-				Age = random.Next(18, 39),
-				Number = random.Next(1, 99),
-				Position = "Undefined",
-				Attacking = random.Next(45, 98),
-				Defending = random.Next(45, 98),
-				Speed = random.Next(45, 98),
-				Dribbling = random.Next(45, 98),
-				Shooting = random.Next(45, 98),
-				Physical = random.Next(45, 98),
-				Passing = random.Next(45, 98)
-			};
-	}
+    private async Task HandleSubmit()
+    {
+        errorMessage = null;
 
-	private List<Player> GeneratePlayersToTeam()
-	{
-		List<Player> playersToTeam = new List<Player>();
+        //newTeam.Players = players;
+        newTeam.Players = new List<Player>();
+        newTeam.Overall = newTeam.CalculateTeamOverall();
 
-		for(int i = 0; i < 11; i++)
-		{
-			playersToTeam.Add(GenerateNewRandomPlayer());
-		}
+        try
+        {
+            await TeamService.CreateTeamAsync(newTeam);
+            NavigationManager.NavigateTo("/allteams");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error: {ex.Message}";
+        }
+    }
 
-		return playersToTeam;
-	}
+    private async Task GenerateRandomPlayersAsync()
+    {
+        players.Clear();
+
+        for (int i = 0; i < 11; i++)
+        {
+            var newPlayer = await GenerateNewRandomPlayer();
+            players.Add(newPlayer);
+        }
+    }
+
+    private async Task<Player> GenerateNewRandomPlayer()
+    {
+        Random random = new();
+        string[] fNames = new string[] {"Zlatko", "Bob", "John", "Abdo", "Alexander", "Alf",
+                                        "Brian", "Marcus", "Ilve", "Anthony", "Marc","Leo","Anders",
+                                        "King","Nico", "Bruno", "Tomas","Toni"};
+        string[] lNames = new string[] {"Anderson", "Modric", "Johansson", "El Bruto", "Kostic", "Hansen",
+                                        "Oduya", "McCann", "Alonso", "Sanchez", "Martinez", "Gudmundsen",
+                                        "Cruyff", "Bronkz", "Badonk", "Dängsen", "Brúm", "Diaz", "El Dängo",
+                                        "Minko", "Putinski", "Kroos", "Hernandez"};
+
+        var newPlayer = new Player
+            {
+                Name = $"{fNames[random.Next(fNames.Length)]} {lNames[random.Next(lNames.Length)]}",
+                Age = random.Next(18, 39),
+                Number = random.Next(1, 99),
+                Position = "XX",
+                Attacking = random.Next(45, 98),
+                Defending = random.Next(45, 98),
+                Speed = random.Next(45, 98),
+                Dribbling = random.Next(45, 98),
+                Shooting = random.Next(45, 98),
+                Physical = random.Next(45, 98),
+                Passing = random.Next(45, 98),
+                Team = newTeam,
+                TeamId = newTeam.Id
+            };
+
+        PlayerService.CalculatePlayerOverall(newPlayer);
+        await PlayerService.CreatePlayerAsync(newPlayer);
+        return newPlayer;
+    }
 }

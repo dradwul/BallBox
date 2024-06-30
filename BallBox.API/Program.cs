@@ -23,6 +23,7 @@ namespace BallBox.API
 				options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 			builder.Services.AddScoped<TeamRepository>();
+			builder.Services.AddScoped<PlayerRepository>();
 
 			builder.Services.AddCors(options =>
 			{

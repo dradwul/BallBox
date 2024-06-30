@@ -1,4 +1,5 @@
 ﻿using BallBox.Client.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BallBox.Data.Repositories
 {
@@ -15,5 +16,15 @@ namespace BallBox.Data.Repositories
 			await _context.Players.AddAsync(player);
 			await _context.SaveChangesAsync();
 		}
-	}
+
+        public Task<List<Player>> GetPlayersAsync()
+        {
+            return _context.Players.ToListAsync();
+        }
+
+        public async Task<int> GetPlayerCountAsync()
+        {
+            return await _context.Players.CountAsync();
+        }
+    }
 }

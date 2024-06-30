@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Presentation", "4.Present
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBox.Application", "BallBox.Application\BallBox.Application.csproj", "{1E9F1685-6FDA-4FCB-9B7A-C6BB2ED470FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallBox.API", "BallBox.API\BallBox.API.csproj", "{3C9D5C21-F222-4745-8312-32EF62454AF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BallBox.API", "BallBox.API\BallBox.API.csproj", "{3C9D5C21-F222-4745-8312-32EF62454AF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
