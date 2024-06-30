@@ -10,9 +10,24 @@
 <EditForm Model="newTeam" OnValidSubmit="HandleSubmit">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
-	<InputText placeholder="Name" id="name" @bind-Value="newTeam.Name" />
-	<InputText placeholder="Prim. Color" id="primaryColor" @bind-Value="newTeam.PrimaryColor" />
-	<InputText placeholder="Sec. Color" id="secondaryColor" @bind-Value="newTeam.SecondaryColor" />
+	<div class="form-control">
+		<label>Team Name</label>
+		<InputText class="form" @bind-Value="newTeam.Name" />
+		<br>
+		<label>Primary Color</label>
+		<InputText @bind-Value="newTeam.PrimaryColor" />
+		<br>
+		<label>Secondary Color</label>
+		<InputText @bind-Value="newTeam.SecondaryColor" />
+	</div>
+	@* <div class="form-control">
+		<h5> Players </h5>
+		<label>Player</label>
+		<InputNumber @bind-Value="newTeam.Attacking" />
+		<label>Defending</label>
+		<InputNumber @bind-Value="newTeam.Defending" />
+	</div> *@
+	
 	<button type="submit">Create Team</button>
 </EditForm>
 
@@ -22,7 +37,48 @@
 
 	private async Task HandleSubmit()
 	{
+		var players = GeneratePlayersToTeam();
+		newTeam.Players = players;
 		await TeamService.CreateTeamAsync(newTeam);
 		NavigationManager.NavigateTo("/allteams");
+	}
+
+	private Player GenerateNewRandomPlayer()
+	{
+		Random random = new();
+		string[] fNames = new string[] {"Zlatko", "Bob", "John", "Abdo", "Alexander", "Alf",
+										"Brian", "Marcus", "Ilve", "Anthony", "Marc","Leo","Anders",
+										"King","Nico", "Bruno", "Tomas","Toni"};
+		string[] lNames = new string[] {"Anderson", "Modric", "Johansson", "El Bruto", "Kostic", "Hansen",
+										"Oduya", "McCann", "Alonso", "Sanchez", "Martinez", "Gudmundsen",
+										"Cruyff", "Bronkz", "Badonk", "Dängsen", "Brúm", "Diaz", "El Dängo",
+										"Minko", "Putinski", "Kroos", "Hernandez"};
+
+		return new Player()
+			{
+				Name = lNames[random.Next(0, lNames.Length)],
+				Age = random.Next(18, 39),
+				Number = random.Next(1, 99),
+				Position = "Undefined",
+				Attacking = random.Next(45, 98),
+				Defending = random.Next(45, 98),
+				Speed = random.Next(45, 98),
+				Dribbling = random.Next(45, 98),
+				Shooting = random.Next(45, 98),
+				Physical = random.Next(45, 98),
+				Passing = random.Next(45, 98)
+			};
+	}
+
+	private List<Player> GeneratePlayersToTeam()
+	{
+		List<Player> playersToTeam = new List<Player>();
+
+		for(int i = 0; i < 11; i++)
+		{
+			playersToTeam.Add(GenerateNewRandomPlayer());
+		}
+
+		return playersToTeam;
 	}
 }

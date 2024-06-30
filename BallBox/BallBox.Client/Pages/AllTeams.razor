@@ -11,24 +11,37 @@
 }
 else
 {
-    <ul>
-        @foreach (var team in teams)
-        {
-            <li>@team.Name</li>
-        }
-    </ul>
     <table class="table">
         <thead>
-            <th>Team</th>
-            <th>Color</th>
-            <th>OVR</th>
+            <tr>
+                <th>Team</th>
+                <th>Color</th>
+                <th>OVR</th>
+                <th>ATT</th>
+                <th>DEF</th>
+                <th>Wins</th>
+                <th>Draws</th>
+                <th>Losses</th>
+                <th>GM</th>
+                <th>GC</th>
+                <th>GDiff</th>
+            </tr>
         </thead>
         <tbody>
-            @foreach(var team in teams){
+            @foreach (var team in teams)
+            {
                 <tr>
                     <td>@team.Name</td>
                     <td>@team.PrimaryColor / @team.SecondaryColor</td>
-                    <td>@team.Overall</td>
+                    <td>@team.CalculateTeamOverall()</td>
+                    <td>@team.Attacking</td>
+                    <td>@team.Defending</td>
+                    <td>@team.Wins</td>
+                    <td>@team.Draws</td>
+                    <td>@team.Losses</td>
+                    <td>@team.GoalsScored</td>
+                    <td>@team.GoalsConceded</td>
+                    <td>@team.CalculateTeamGoalDifference()</td>
                 </tr>
             }
         </tbody>

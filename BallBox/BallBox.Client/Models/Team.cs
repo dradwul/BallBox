@@ -25,5 +25,10 @@ namespace BallBox.Client.Models
             if (Players.Count == 0) return 0;
             return Players.Sum(p => p.Overall) / Players.Count;
         }
+
+        public int CalculateTeamGoalDifference()
+        {
+            return GoalsScored - GoalsConceded;
+        }
     }
 }
