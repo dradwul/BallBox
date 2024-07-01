@@ -11,7 +11,6 @@ namespace BallBox.Client.Models
 
         [ForeignKey("Team")]
         public int TeamId { get; set; }
-        public Team Team { get; set; }
 
         public int Number { get; set; }
         public string Position { get; set; }

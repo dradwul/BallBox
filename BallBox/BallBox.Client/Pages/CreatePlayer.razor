@@ -1,31 +1,109 @@
 ﻿@page "/createplayer"
 @using BallBox.Client.Models
+@using BallBox.Client.Services
+@inject PlayerService PlayerService
+@inject NavigationManager NavigationManager
 
-<PageTitle>Create Player</PageTitle>
+<h3>Create Player</h3>
 
-<h1>Create Player</h1>
+<EditForm Model="newPlayer" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-control">
+        <label>Player Name</label>
+        <InputText class="form" @bind-Value="newPlayer.Name" />
+        <br>
+        <label>Age</label>
+        <InputNumber @bind-Value="newPlayer.Age" />
+    </div>
+    <button type="submit">Create Player</button>
+</EditForm>
 
-<form method="post" @onsubmit="HandleSubmit">
-	<div class="form-group">
-		<label for="playername"> Name </label>
-		<input for="playername" class="form-control" @bind="NewPlayer.Name" />
-	</div>
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
 
-	<div class="form-group">
-		<label for="playerage"> Age </label>
-		<input form="playerage" class="form-control" @bind="NewPlayer.Age" />
-	</div>
+<button type="button" @onclick="GenerateNewRandomPlayer"> Generate random player </button>
 
-	<button type="submit" class="btn btn-primary"> Create </button>
-</form>
-
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Team</th>
+        <th>Position</th>
+        <th>Overall</th>
+    </tr>
+    @foreach (var player in players)
+    {
+        <tr>
+            <td> @player.Name </td>
+            <td> @player.Age </td>
+            <td> @player.TeamId </td>
+            <td> @player.Position </td>
+            <td> @player.Overall </td>
+        </tr>
+    }
+</table>
 
 @code {
-	[Parameter]
-	public Player NewPlayer { get; set; } = new();
+    private Player newPlayer = new();
+    private List<Player> players = new List<Player>();
 
-	private void HandleSubmit()
-	{
+    private string? errorMessage;
 
-	}
+    private async Task HandleSubmit()
+    {
+        errorMessage = null;
+
+        try
+        {
+            await PlayerService.CreatePlayerAsync(newPlayer);
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error: {ex.Message}";
+        }
+    }
+
+    private async Task GenerateNewRandomPlayer()
+    {
+        Random random = new();
+        string[] fNames = new string[] {"Zlatko", "Bob", "John", "Abdo", "Alexander", "Alf",
+                                        "Brian", "Marcus", "Ilve", "Anthony", "Marc","Leo","Anders",
+                                        "King","Nico", "Bruno", "Tomas","Toni"};
+        string[] lNames = new string[] {"Anderson", "Modric", "Johansson", "El Bruto", "Kostic", "Hansen",
+                                        "Oduya", "McCann", "Alonso", "Sanchez", "Martinez", "Gudmundsen",
+                                        "Cruyff", "Bronkz", "Badonk", "Dängsen", "Brúm", "Diaz", "El Dängo",
+                                        "Minko", "Putinski", "Kroos", "Hernandez"};
+
+        var newPlayer = new Player
+            {
+                Name = lNames[random.Next(0,lNames.Length)],
+                Age = random.Next(18, 39),
+                Number = random.Next(1, 99),
+                Position = "XX",
+                Attacking = random.Next(45, 98),
+                Defending = random.Next(45, 98),
+                Speed = random.Next(45, 98),
+                Dribbling = random.Next(45, 98),
+                Shooting = random.Next(45, 98),
+                Physical = random.Next(45, 98),
+                Passing = random.Next(45, 98)
+            };
+
+        try
+        {
+            PlayerService.CalculatePlayerOverall(newPlayer);
+            players.Add(newPlayer);
+            Console.WriteLine($"Creating player: {System.Text.Json.JsonSerializer.Serialize(newPlayer)}"); // Log player data
+            await PlayerService.CreatePlayerAsync(newPlayer);
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+                errorMessage = $"Error: {ex.Message}";
+            }
+        }
 }
